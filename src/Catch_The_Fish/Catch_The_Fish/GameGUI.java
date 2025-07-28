@@ -7,10 +7,10 @@ public class GameGUI extends JFrame {
     private CardLayout cardLayout;
     private JTextArea output = new JTextArea(4, 30);
     private JLabel scoreLabel = new JLabel();
-    private JButton fishButton = new JButton("Balık Tut!");
-    private JButton quitButton = new JButton("Balık Tutmayı Bırak");
-    private JButton replayButton = new JButton("Yeniden Oyna");
-    private JButton menuButton = new JButton("Ana Menüye Dön");
+    private JButton fishButton = new JButton("Catch Fish!");
+    private JButton quitButton = new JButton("Stop Fishing");
+    private JButton replayButton = new JButton("Play Again");
+    private JButton menuButton = new JButton("Return to Main Menu");
     private Game game;
     private int playerCount = 1;
     private String[] playerNames = new String[2];
@@ -49,9 +49,9 @@ public class GameGUI extends JFrame {
         JPanel centerPanel = new JPanel(new GridLayout(4, 1, 10, 10));
         JLabel welcomeLabel = new JLabel("Catch The Fish", SwingConstants.CENTER);
         centerPanel.add(welcomeLabel);
-        centerPanel.add(new JLabel("Kaç oyuncu ile oynamak istersiniz?", SwingConstants.CENTER));
-        JButton onePlayerBtn = new JButton("1 Oyuncu");
-        JButton twoPlayerBtn = new JButton("2 Oyuncu");
+        centerPanel.add(new JLabel("How many players?", SwingConstants.CENTER));
+        JButton onePlayerBtn = new JButton("1 Player");
+        JButton twoPlayerBtn = new JButton("2 Players");
         centerPanel.add(onePlayerBtn);
         centerPanel.add(twoPlayerBtn);
         startPanel.add(centerPanel, BorderLayout.CENTER);
@@ -60,10 +60,10 @@ public class GameGUI extends JFrame {
 
         // İSİM PANELİ
         JPanel namePanel = new JPanel(new GridLayout(4, 1, 10, 10));
-        JLabel nameLabel = new JLabel("Oyuncu Adı Giriniz:", SwingConstants.CENTER);
-        JTextField nameField1 = new JTextField("Balıkçı Hasan"); // Varsayılan değer
-        JTextField nameField2 = new JTextField("Balıkçı Hasan2"); // İkinci oyuncu için varsayılan değer
-        JButton nameOkBtn = new JButton("Başla");
+        JLabel nameLabel = new JLabel("Enter Player Name:", SwingConstants.CENTER);
+        JTextField nameField1 = new JTextField("Fisher Hasan"); // Varsayılan değer
+        JTextField nameField2 = new JTextField("Fisher Hasan2"); // İkinci oyuncu için varsayılan değer
+        JButton nameOkBtn = new JButton("Start Game");
         namePanel.add(nameLabel);
         namePanel.add(nameField1);
         namePanel.add(nameField2);
@@ -190,18 +190,18 @@ public class GameGUI extends JFrame {
 
         fishButton.addActionListener(e -> {
             CatchableItem item = game.catchFish(currentPlayer);
-            output.append(playerNames[currentPlayer] + " bir " + item.getName() + " tuttu! (" + item.getPoints() + " puan)\n");
+            output.append(playerNames[currentPlayer] + " 1 " + item.getName() + " catch! (" + item.getPoints() + " point)\n");
             updateScoreLabel();
             if (playerCount == 2) {
                 currentPlayer = 1 - currentPlayer;
-                output.append("Sıra: " + playerNames[currentPlayer] + "\n");
+                output.append("Player turn: " + playerNames[currentPlayer] + "\n");
             }
         });
 
         quitButton.addActionListener(e -> {
-            output.append("\nOyun Bitti!\n");
+            output.append("\nGame Over!\n");
             for (int i = 0; i < playerCount; i++) {
-                output.append(playerNames[i] + " toplam puan: " + game.getPlayer(i).getScore() + "\n");
+                output.append(playerNames[i] + " total score: " + game.getPlayer(i).getScore() + "\n");
             }
             fishButton.setEnabled(false);
             quitButton.setEnabled(false);
